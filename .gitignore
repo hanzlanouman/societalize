@@ -33,8 +33,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# git is not adding components and screens folders
-components/
-screens/
-
