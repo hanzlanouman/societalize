@@ -12,7 +12,7 @@ import { KeyboardAvoidingView } from 'react-native';
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false);
   const validateForm = () => {
     let newErrors = {};
 
