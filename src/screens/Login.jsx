@@ -10,7 +10,7 @@ import { TextInput } from 'react-native-paper';
 import { KeyboardAvoidingView } from 'react-native';
 
 const Login = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ username: 'xoxo', password: '' });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const validateForm = () => {
