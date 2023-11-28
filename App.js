@@ -1,14 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import Login from './src/screens/Login';
-import Bla from './src/components/Bla';
+import Signup from './src/screens/Signup';
+import RegistrationScreen from './src/screens/VerifyCredentials';
+const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
-    <View>
-      <Text className='text-red-500 text-2xl'>
-        Open up App.js to start working on your app!
-      </Text>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Signup" component={Signup} />
+      </Stack.Navigator>
+    </NavigationContainer>
+   
   );
-}
+};
+
+export default App;
