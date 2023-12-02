@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
+<<<<<<< Updated upstream
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
@@ -14,6 +15,12 @@ const App = () => {
       </Stack.Navigator>
     </NavigationContainer>
    
+=======
+    <View style={styles.container}>
+      <Text>Helloo</Text>
+      <StatusBar style='auto' />
+    </View>
+>>>>>>> Stashed changes
   );
 };
 
