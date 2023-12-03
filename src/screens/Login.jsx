@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import useAuth from '../hooks/useAuth';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
+  const { signIn, loading } = useAuth();
   const navigation = useNavigation();
 
   const validateForm = () => {
@@ -27,18 +29,19 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (validateForm()) {
       console.log('Form Data:', formData);
+      await signIn(formData.username, formData.password);
       // Proceed with login logic here
     }
   };
 
   return (
-    <KeyboardAvoidingView behavior="padding">
+    <KeyboardAvoidingView behavior='padding'>
       <ScrollView
         contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps='handled'
       >
         <View style={styles.container}>
           <Text style={styles.headerText}>Societalize</Text>
@@ -46,9 +49,11 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              mode="outlined"
-              label="Username"
-              onChangeText={(text) => setFormData({ ...formData, username: text })}
+              mode='outlined'
+              label='Username'
+              onChangeText={(text) =>
+                setFormData({ ...formData, username: text })
+              }
               value={formData.username}
             />
             {errors.username && (
@@ -58,15 +63,19 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              mode="outlined"
-              label="Password"
+              mode='outlined'
+              label='Password'
               secureTextEntry
-              onChangeText={(text) => setFormData({ ...formData, password: text })}
+              onChangeText={(text) =>
+                setFormData({ ...formData, password: text })
+              }
               value={formData.password}
             />
           </View>
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.loginButtonText} disabled={loading}>
+              Login
+            </Text>
           </TouchableOpacity>
           <Text style={styles.orText}>OR</Text>
           <TouchableOpacity style={styles.googleSignInButton}>

@@ -2,6 +2,7 @@ import { View, Text, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import useAuth from '../hooks/useAuth';
+import { useNavigation } from '@react-navigation/native';
 const Stack = createStackNavigator();
 const UserNav = () => {
   return (
@@ -15,10 +16,16 @@ const UserNav = () => {
 
 const UserScreens = () => {
   const { signOutUser } = useAuth();
+  const navigation = useNavigation();
   return (
     <View>
       <Text> This is a User Screen. Shown only when Authenticateds</Text>
-      <Button title='Logout' onPress={() => signOutUser} />
+      <Button
+        title='Logout'
+        onPress={() => {
+          signOutUser();
+        }}
+      />
     </View>
   );
 };
