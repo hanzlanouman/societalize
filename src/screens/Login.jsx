@@ -8,14 +8,12 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hookimport {
-import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
-  const navigation = useNavigation(); // Hook to access navigation object
+  const navigation = useNavigation();
 
   const validateForm = () => {
     let newErrors = {};
@@ -37,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <View>
+    <KeyboardAvoidingView behavior="padding">
       <ScrollView
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps="handled"
@@ -48,11 +46,9 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              mode='outlined'
-              label='Username'
-              onChangeText={(text) =>
-                setFormData({ ...formData, username: text })
-              }
+              mode="outlined"
+              label="Username"
+              onChangeText={(text) => setFormData({ ...formData, username: text })}
               value={formData.username}
             />
             {errors.username && (
@@ -65,9 +61,7 @@ const Login = () => {
               mode="outlined"
               label="Password"
               secureTextEntry
-              onChangeText={(text) =>
-                setFormData({ ...formData, password: text })
-              }
+              onChangeText={(text) => setFormData({ ...formData, password: text })}
               value={formData.password}
             />
           </View>
@@ -78,7 +72,6 @@ const Login = () => {
           <TouchableOpacity style={styles.googleSignInButton}>
             <Text style={styles.googleSignInText}>Sign in with Google</Text>
           </TouchableOpacity>
-          {/* Button to navigate to the Signup page */}
           <TouchableOpacity
             onPress={() => navigation.navigate('Signup')}
             style={styles.navigateSignupButton}
@@ -89,11 +82,10 @@ const Login = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
-// Styles for the Login component
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
@@ -146,7 +138,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 20,
   },
-
   googleSignInButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -170,16 +161,6 @@ const styles = StyleSheet.create({
     color: '#374151',
     fontSize: 18,
     fontWeight: '700',
-    color: '#7a29ff',
-    fontSize: 16,
-  },
-  navigateSignupButton: {
-    marginTop: 10,
-  },
-  navigateSignupText: {
-    textAlign: 'center',
-    color: 'blue',
-    fontSize: 16,
   },
 });
 
