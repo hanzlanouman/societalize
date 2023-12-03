@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 
@@ -12,7 +19,8 @@ const Login = () => {
     let newErrors = {};
 
     if (formData.username.includes(' ') || formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters long with no spaces';
+      newErrors.username =
+        'Username must be at least 3 characters long with no spaces';
     }
 
     setErrors(newErrors);
@@ -27,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding'>
+    <View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps='handled'
@@ -40,10 +48,14 @@ const Login = () => {
               style={styles.input}
               mode='outlined'
               label='Username'
-              onChangeText={(text) => setFormData({ ...formData, username: text })}
+              onChangeText={(text) =>
+                setFormData({ ...formData, username: text })
+              }
               value={formData.username}
             />
-            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+            {errors.username && (
+              <Text style={styles.errorText}>{errors.username}</Text>
+            )}
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -51,7 +63,9 @@ const Login = () => {
               mode='outlined'
               label='Password'
               secureTextEntry
-              onChangeText={(text) => setFormData({ ...formData, password: text })}
+              onChangeText={(text) =>
+                setFormData({ ...formData, password: text })
+              }
               value={formData.password}
             />
           </View>
@@ -68,11 +82,13 @@ const Login = () => {
             onPress={() => navigation.navigate('Signup')}
             style={styles.navigateSignupButton}
           >
-            <Text style={styles.navigateSignupText}>Don't have an account? Sign Up</Text>
+            <Text style={styles.navigateSignupText}>
+              Don't have an account? Sign Up
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -80,12 +96,13 @@ const Login = () => {
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
+    backgroundColor: 'white',
+    height: '100%',
   },
   container: {
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    marginTop: 100,
     backgroundColor: 'white',
   },
   headerText: {
@@ -128,22 +145,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginVertical: 20,
   },
- 
-    googleSignInButton: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: 12,
-      borderRadius: 50,
-      borderWidth: 2,
-      borderColor: '#e2e8f0',
-    },
-    googleSignInText: {
-      textAlign: 'center',
-      color: '#374151',
-      fontSize: 18,
-      fontWeight: '700',
-    },
+
+  googleSignInButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 12,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#e2e8f0',
+  },
+  googleSignInText: {
+    textAlign: 'center',
+    color: '#374151',
+    fontSize: 18,
+    fontWeight: '700',
+  },
   navigateSignupButton: {
     marginTop: 10,
   },

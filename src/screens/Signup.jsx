@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { KeyboardAvoidingView } from 'react-native';
+import useAuth from '../hooks/useAuth';
 
 const Signup = () => {
-  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const { signUp } = useAuth();
 
   const validateForm = () => {
     let newErrors = {};
 
     // Username validation
     if (formData.username.includes(' ') || formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters long with no spaces';
+      newErrors.username =
+        'Username must be at least 3 characters long with no spaces';
     }
 
     // Email validation (basic example)
@@ -25,15 +38,16 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (validateForm()) {
       console.log('Form Data:', formData);
+      await signUp(formData.email, formData.password);
       // proceed with signup
     }
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding'>
+    <View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps='handled'
@@ -46,10 +60,14 @@ const Signup = () => {
               style={styles.input}
               mode='outlined'
               label='Username'
-              onChangeText={(text) => setFormData({ ...formData, username: text })}
+              onChangeText={(text) =>
+                setFormData({ ...formData, username: text })
+              }
               value={formData.username}
             />
-            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
+            {errors.username && (
+              <Text style={styles.errorText}>{errors.username}</Text>
+            )}
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -59,7 +77,9 @@ const Signup = () => {
               onChangeText={(text) => setFormData({ ...formData, email: text })}
               value={formData.email}
             />
-            {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+            {errors.email && (
+              <Text style={styles.errorText}>{errors.email}</Text>
+            )}
           </View>
           <View style={styles.inputContainer}>
             <TextInput
@@ -67,7 +87,9 @@ const Signup = () => {
               mode='outlined'
               label='Password'
               secureTextEntry
-              onChangeText={(text) => setFormData({ ...formData, password: text })}
+              onChangeText={(text) =>
+                setFormData({ ...formData, password: text })
+              }
               value={formData.password}
             />
           </View>
@@ -80,7 +102,7 @@ const Signup = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
