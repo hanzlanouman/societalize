@@ -8,7 +8,9 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hookimport {
+import { TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -38,7 +40,7 @@ const Login = () => {
     <View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.container}>
           <Text style={styles.headerText}>Societalize</Text>
@@ -60,8 +62,8 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              mode='outlined'
-              label='Password'
+              mode="outlined"
+              label="Password"
               secureTextEntry
               onChangeText={(text) =>
                 setFormData({ ...formData, password: text })
@@ -76,7 +78,6 @@ const Login = () => {
           <TouchableOpacity style={styles.googleSignInButton}>
             <Text style={styles.googleSignInText}>Sign in with Google</Text>
           </TouchableOpacity>
-
           {/* Button to navigate to the Signup page */}
           <TouchableOpacity
             onPress={() => navigation.navigate('Signup')}
@@ -166,7 +167,18 @@ const styles = StyleSheet.create({
   },
   navigateSignupText: {
     textAlign: 'center',
+    color: '#374151',
+    fontSize: 18,
+    fontWeight: '700',
     color: '#7a29ff',
+    fontSize: 16,
+  },
+  navigateSignupButton: {
+    marginTop: 10,
+  },
+  navigateSignupText: {
+    textAlign: 'center',
+    color: 'blue',
     fontSize: 16,
   },
 });
