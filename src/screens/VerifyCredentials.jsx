@@ -13,7 +13,7 @@ import { TextInput, Button } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
   const [department, setDepartment] = useState('');
   const [regNo, setRegNo] = useState('');
   const [image, setImage] = useState(null);
@@ -40,7 +40,9 @@ const RegistrationScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <ScrollView
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps='handled'
@@ -55,11 +57,11 @@ const RegistrationScreen = () => {
               onValueChange={(itemValue, itemIndex) => setDepartment(itemValue)}
               style={styles.picker}
             >
-              <Picker.Item label="Select Department" value="" />
-              <Picker.Item label="BSE" value="BSE" />
-              <Picker.Item label="BCE" value="BCE" />
-              <Picker.Item label="BCS" value="BCS" />
-              <Picker.Item label="EEE" value="EEE" />
+              <Picker.Item label='Select Department' value='' />
+              <Picker.Item label='BSE' value='BSE' />
+              <Picker.Item label='BCE' value='BCE' />
+              <Picker.Item label='BCS' value='BCS' />
+              <Picker.Item label='EEE' value='EEE' />
             </Picker>
           </View>
 
@@ -84,7 +86,10 @@ const RegistrationScreen = () => {
 
           {/* Display the selected image */}
           {image && (
-            <Image source={image} style={{ width: 200, height: 200, marginTop: 10 }} />
+            <Image
+              source={image}
+              style={{ width: 200, height: 200, marginTop: 10 }}
+            />
           )}
         </View>
       </ScrollView>
@@ -128,7 +133,6 @@ const styles = StyleSheet.create({
   input: {
     height: 50, // Adjust the height as needed
     fontSize: 18,
-    fontFamily: 'YourPreferredFont', // Add the desired font family
     // Add any additional styling you prefer
   },
   uploadButton: {

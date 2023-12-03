@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding'>
+    <View>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         keyboardShouldPersistTaps='handled'
@@ -91,7 +91,7 @@ const Login = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

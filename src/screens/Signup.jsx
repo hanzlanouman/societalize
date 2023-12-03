@@ -9,8 +9,9 @@ import {
 import { TextInput } from 'react-native-paper';
 import { KeyboardAvoidingView } from 'react-native';
 import useAuth from '../hooks/useAuth';
+import { useNavigation } from '@react-navigation/native';
 
-const Signup = () => {
+const Signup = ({ navigation }) => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -93,15 +94,15 @@ const Signup = () => {
               value={formData.password}
             />
           </View>
-        
 
           <TouchableOpacity
-  style={styles.signupButton}
-  onPress={() => navigation.navigate('RegistrationScreen')}
->
-  <Text style={styles.signupButtonText}>Sign Up</Text>
-</TouchableOpacity>
-
+            style={styles.signupButton}
+            onPress={() =>
+              navigation.navigate('RegistrationScreen', { formData })
+            }
+          >
+            <Text style={styles.signupButtonText}>Sign Up</Text>
+          </TouchableOpacity>
 
           <Text style={styles.orText}>OR</Text>
           <TouchableOpacity style={styles.googleSignInButton}>

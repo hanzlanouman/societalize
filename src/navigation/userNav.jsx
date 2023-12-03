@@ -3,12 +3,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
+import RegistrationScreen from '../screens/VerifyCredentials';
 const Stack = createStackNavigator();
 const UserNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='UserScreens'>
         <Stack.Screen name='UserScreens' component={UserScreens} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
