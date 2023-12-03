@@ -95,7 +95,6 @@ const Signup = () => {
           </View>
         
 
-
           <TouchableOpacity
   style={styles.signupButton}
   onPress={() => navigation.navigate('RegistrationScreen')}
