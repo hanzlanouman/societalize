@@ -1,12 +1,29 @@
 import React, { useState } from 'react';
+<<<<<<< Updated upstream
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+=======
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
+import { TextInput } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+>>>>>>> Stashed changes
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
+<<<<<<< Updated upstream
   const navigation = useNavigation(); // Hook to access navigation object
+=======
+  const navigation = useNavigation();
+>>>>>>> Stashed changes
 
   const validateForm = () => {
     let newErrors = {};
@@ -27,10 +44,10 @@ const Login = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior='padding'>
+    <KeyboardAvoidingView behavior="padding">
       <ScrollView
         contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps='handled'
+        keyboardShouldPersistTaps="handled"
       >
         <View style={styles.container}>
           <Text style={styles.headerText}>Societalize</Text>
@@ -38,8 +55,13 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
+<<<<<<< Updated upstream
               mode='outlined'
               label='Username'
+=======
+              mode="outlined"
+              label="Username"
+>>>>>>> Stashed changes
               onChangeText={(text) => setFormData({ ...formData, username: text })}
               value={formData.username}
             />
@@ -48,8 +70,8 @@ const Login = () => {
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              mode='outlined'
-              label='Password'
+              mode="outlined"
+              label="Password"
               secureTextEntry
               onChangeText={(text) => setFormData({ ...formData, password: text })}
               value={formData.password}
@@ -62,13 +84,22 @@ const Login = () => {
           <TouchableOpacity style={styles.googleSignInButton}>
             <Text style={styles.googleSignInText}>Sign in with Google</Text>
           </TouchableOpacity>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
           {/* Button to navigate to the Signup page */}
           <TouchableOpacity
             onPress={() => navigation.navigate('Signup')}
             style={styles.navigateSignupButton}
           >
+<<<<<<< Updated upstream
             <Text style={styles.navigateSignupText}>Don't have an account? Sign Up</Text>
+=======
+            <Text style={styles.navigateSignupText}>
+              Don't have an account? Sign Up
+            </Text>
+>>>>>>> Stashed changes
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -149,8 +180,24 @@ const styles = StyleSheet.create({
   },
   navigateSignupText: {
     textAlign: 'center',
+<<<<<<< Updated upstream
     color: '#7a29ff',
     fontSize: 16,
+=======
+    color: '#374151',
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#7a29ff',
+    fontSize: 16,
+  },
+  navigateSignupButton: {
+    marginTop: 10,
+  },
+  navigateSignupText: {
+    textAlign: 'center',
+    color: 'blue',
+    fontSize: 16,
+>>>>>>> Stashed changes
   },
 });
 

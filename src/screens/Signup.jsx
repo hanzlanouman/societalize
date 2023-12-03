@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
+<<<<<<< Updated upstream
 import { KeyboardAvoidingView } from 'react-native';
 
 const Signup = () => {
@@ -8,6 +9,16 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+=======
+import { useNavigation } from '@react-navigation/native';
+import { KeyboardAvoidingView } from 'react-native';
+
+
+const Signup = () => {
+  const [formData, setFormData] = useState({ username: '', email: '', password: '' });
+  const [errors, setErrors] = useState({});
+  const navigation = useNavigation();
+>>>>>>> Stashed changes
   const validateForm = () => {
     let newErrors = {};
 
@@ -71,9 +82,23 @@ const Signup = () => {
               value={formData.password}
             />
           </View>
+<<<<<<< Updated upstream
           <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
             <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>
+=======
+        
+
+
+          <TouchableOpacity
+  style={styles.signupButton}
+  onPress={() => navigation.navigate('RegistrationScreen')}
+>
+  <Text style={styles.signupButtonText}>Sign Up</Text>
+</TouchableOpacity>
+
+
+>>>>>>> Stashed changes
           <Text style={styles.orText}>OR</Text>
           <TouchableOpacity style={styles.googleSignInButton}>
             <Text style={styles.googleSignInText}>Sign up with Google</Text>
