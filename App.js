@@ -5,3 +5,14 @@ const App = () => {
 };
 
 export default App;
+=======
+        <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+  );
+}
+
+
+export default App;
+>>>>>>> Stashed changes
