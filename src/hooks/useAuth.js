@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { auth } from '../config/firebase.config';
+import useFirestore from './useFirestore';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,6 +8,7 @@ import {
   signOut,
 } from 'firebase/auth';
 
+const { setUserProfile } = useFirestore();
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ const useAuth = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        setUser(currentUser);
+        setUser(currentUser); 
 
         setLoading(false);
       } else {
@@ -31,7 +33,10 @@ const useAuth = () => {
   };
 
   const signUp = async (email, password) => {
+    console.log(email, password);
     await createUserWithEmailAndPassword(auth, email, password);
+    
+    await setUserProfile({email, password});
   };
 
   const signOutUser = async () => {
