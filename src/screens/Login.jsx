@@ -4,8 +4,7 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  StyleSheet,
-  KeyboardAvoidingView,
+  StyleSheet
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -14,17 +13,14 @@ import useAuth from '../hooks/useAuth';
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const [errors, setErrors] = useState({});
-  const { signIn, loading } = useAuth();
+  const { signIn, loading, user } = useAuth();
   const navigation = useNavigation();
 
   const validateForm = () => {
     let newErrors = {};
-
     if (formData.username.includes(' ') || formData.username.length < 3) {
-      newErrors.username =
-        'Username must be at least 3 characters long with no spaces';
+      newErrors.username = 'Username must be at least 3 characters long with no spaces';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -33,62 +29,53 @@ const Login = () => {
     if (validateForm()) {
       console.log('Form Data:', formData);
       await signIn(formData.username, formData.password);
-      // Proceed with login logic here
     }
   };
 
   return (
     <View>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        keyboardShouldPersistTaps='handled'
-      >
+      <ScrollView contentContainerStyle={styles.scrollView} keyboardShouldPersistTaps='handled'>
         <View style={styles.container}>
           <Text style={styles.headerText}>Societalize</Text>
           <Text style={styles.subHeaderText}>Login</Text>
+
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               mode='outlined'
               label='Username'
-              onChangeText={(text) =>
-                setFormData({ ...formData, username: text })
-              }
+              onChangeText={(text) => setFormData({ ...formData, username: text })}
               value={formData.username}
             />
-            {errors.username && (
-              <Text style={styles.errorText}>{errors.username}</Text>
-            )}
+            {errors.username && <Text style={styles.errorText}>{errors.username}</Text>}
           </View>
+
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
               mode='outlined'
               label='Password'
               secureTextEntry
-              onChangeText={(text) =>
-                setFormData({ ...formData, password: text })
-              }
+              onChangeText={(text) => setFormData({ ...formData, password: text })}
               value={formData.password}
             />
           </View>
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText} disabled={loading}>
-              Login
-            </Text>
+
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={loading}>
+            <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
+
           <Text style={styles.orText}>OR</Text>
           <TouchableOpacity style={styles.googleSignInButton}>
             <Text style={styles.googleSignInText}>Sign in with Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Signup')}
-            style={styles.navigateSignupButton}
-          >
-            <Text style={styles.navigateSignupText}>
-              Don't have an account? Sign Up
-            </Text>
+
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={styles.navigateSignupButton}>
+            <Text style={styles.navigateSignupText}>Don't have an account? Sign Up</Text>
           </TouchableOpacity>
+
+        
+
         </View>
       </ScrollView>
     </View>
@@ -170,6 +157,17 @@ const styles = StyleSheet.create({
     color: '#374151',
     fontSize: 18,
     fontWeight: '700',
+  },
+  // Styles for user profile display
+  profileContainer: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+  },
+  profileText: {
+    fontSize: 16,
+    color: '#333',
   },
 });
 

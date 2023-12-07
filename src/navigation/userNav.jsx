@@ -18,6 +18,7 @@ const UserNav = () => {
 
 const UserScreens = () => {
   const { signOutUser } = useAuth();
+
   const navigation = useNavigation();
   return (
     <View>
@@ -28,6 +29,8 @@ const UserScreens = () => {
           signOutUser();
         }}
       />
+
+        
     </View>
   );
 };

@@ -8,7 +8,6 @@ import {
   signOut,
 } from 'firebase/auth';
 
-const { setUserProfile } = useFirestore();
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,16 +27,23 @@ const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
+    
+
   const signIn = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
+    const { getUserProfile } = useFirestore();
+    const user = await getUserProfile({email, password});
+
+
   };
 
   const signUp = async (email, password) => {
     console.log(email, password);
     await createUserWithEmailAndPassword(auth, email, password);
-    
+    const { setUserProfile } = useFirestore();
     await setUserProfile({email, password});
-  };
+};
+
 
   const signOutUser = async () => {
     try {

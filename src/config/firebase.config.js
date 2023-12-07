@@ -1,28 +1,41 @@
-// Import required functions and libraries
-import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  initializeAuth,
-  getReactNativePersistence,
+import { initializeApp, getApps } from 'firebase/app';
+import { 
+    getAuth, 
+    initializeAuth, 
+    getReactNativePersistence,
+    onAuthStateChanged
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAQGrKeB7r4hEoD8bqYdOheXub4hD9RNrU',
-  authDomain: 'societalize.firebaseapp.com',
-  projectId: 'societalize',
-  storageBucket: 'societalize.appspot.com',
-  messagingSenderId: '706652832922',
-  appId: '1:706652832922:web:58cebc7303b438d457cb23',
+    apiKey: 'AIzaSyAQGrKeB7r4hEoD8bqYdOheXub4hD9RNrU',
+    authDomain: 'societalize.firebaseapp.com',
+    projectId: 'societalize',
+    storageBucket: 'societalize.appspot.com',
+    messagingSenderId: '706652832922',
+    appId: '1:706652832922:web:58cebc7303b438d457cb23',
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+let app;
+if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApps()[0]; // Use the already initialized app
+}
 
-// Initialize Firebase Auth with AsyncStorage for React Native
-const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+const firestore = getFirestore(app);
 
-export { auth };
+// Initialize Firebase Auth
+let auth;
+if (!getAuth(app)) { // Check if auth has already been initialized
+    auth = initializeAuth(app, {
+        persistence: getReactNativePersistence(AsyncStorage)
+    });
+} else {
+    auth = getAuth(app);
+}
+
+export { auth, firestore };
