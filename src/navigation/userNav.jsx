@@ -18,8 +18,8 @@ const UserNav = () => {
 
 const UserScreens = () => {
   const { signOutUser } = useAuth();
+  const {  user } = useAuth();
 
-  const navigation = useNavigation();
   return (
     <View>
       <Text> This is a User Screen. Shown only when Authenticateds</Text>
@@ -30,7 +30,14 @@ const UserScreens = () => {
         }}
       />
 
-        
+        {/* Display user profile info if user is not null */}
+        {user && (
+            <View >
+              <Text >User Profile</Text>
+              <Text >Email: {user.email}</Text>
+              {/* Password is not displayed for security reasons */}
+            </View>
+          )}
     </View>
   );
 };
