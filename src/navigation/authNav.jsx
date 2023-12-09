@@ -11,10 +11,7 @@ const AuthNav = () => {
       <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen name='Login' component={Login} />
         <Stack.Screen name='Signup' component={Signup} />
-        <Stack.Screen
-          name='RegistrationScreen'
-          component={RegistrationScreen}
-        />
+        <Stack.Screen name='RegistrationScreen' component={RegistrationScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
