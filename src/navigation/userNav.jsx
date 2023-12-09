@@ -15,12 +15,15 @@ import {
 } from "react-native";
 // import { Avatar } from "react-native-elements";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import PostScreen from '../screens/PostScreen';
 const Stack = createStackNavigator();
 const UserNav = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='ProfileScreen'>
+            <Stack.Navigator initialRouteName='PostScreen'>
+                <Stack.Screen name='PostScreen' component={PostScreen} />
                 <Stack.Screen name='ProfileScreen' component={ProfileScreen} />
+
 
             </Stack.Navigator>
         </NavigationContainer>
@@ -116,6 +119,7 @@ const ProfileScreen = () => {
                         }}
                     />
                 </View>
+                
 
             </ScrollView>
         </SafeAreaView>
