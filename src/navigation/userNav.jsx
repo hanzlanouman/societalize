@@ -44,13 +44,13 @@ const ProfileScreen = () => {
                     <View style={styles.profileImage}>
                         <View style={styles.profileImage}>
                         </View>
-                       
+
                         <Image
-                            source={require("../../assets/profile.jpg")}
+                            source={require('../../assets/user3.jpg')}
                             style={styles.image}
                             resizeMode="center"
                         />
-                      
+
                     </View>
                     <View style={styles.dm}>
                         <MaterialIcons
@@ -69,8 +69,8 @@ const ProfileScreen = () => {
                         ></Ionicons>
                     </View>
 
-                    
-              </View>
+
+                </View>
 
                 <View style={styles.infoContainer}>
                     {user && (
@@ -79,7 +79,7 @@ const ProfileScreen = () => {
                                 User Profile</Text>
                             <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
                                 {user.email}</Text>
-                                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
+                            <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
                                 {user.password}</Text>
                             {/* Password is not displayed for security reasons */}
                         </View>
@@ -119,7 +119,7 @@ const ProfileScreen = () => {
                         }}
                     />
                 </View>
-                
+
 
             </ScrollView>
         </SafeAreaView>
@@ -127,108 +127,113 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      backgroundColor: "#f0f4f7", // Light background color for a clean look
-  },
-  text: {
-      fontFamily: "sans-serif-medium",
-      color: "#52575D", // A neutral, dark color for text
-  },
-  titleBar: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: 24,
-      marginHorizontal: 16,
-  },
-  profileImage: {
-      width: 200,
-      height: 200,
-      borderRadius: 100,
-      overflow: "hidden",
-      marginTop: 36,
-      alignSelf: "center",
-  },
-  dm: {
-      backgroundColor: "#7a29ff",
-      position: "absolute",
-      top: 20,
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      alignItems: "center",
-      justifyContent: "center",
-  },
-  active: {
-      backgroundColor: "#34FFB9",
-      position: "absolute",
-      bottom: 28,
-      left: 10,
-      padding: 4,
-      height: 20,
-      width: 20,
-      borderRadius: 10,
-  },
-  add: {
-      backgroundColor: "#7a29ff",
-      position: "absolute",
-      bottom: 0,
-      right: 0,
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-      alignItems: "center",
-      justifyContent: "center",
-  },
-  infoContainer: {
-      alignSelf: "center",
-      alignItems: "center",
-      marginTop: 16,
-  },
-  statsContainer: {
-      flexDirection: "row",
-      alignSelf: "center",
-      marginTop: 32,
-      backgroundColor: "#FFF", // White background for stats
-      borderRadius: 16,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 0 },
-      shadowRadius: 6,
-      shadowOpacity: 0.1,
-      elevation: 3,
-  },
-  statsBox: {
-      alignItems: "center",
-      flex: 1,
-      padding: 12,
-  },
-  subText: {
-      fontSize: 12,
-      color: "#7a29ff",
-      textTransform: "uppercase",
-      fontWeight: "500",
-  },
-  recent: {
-      marginLeft: 78,
-      marginTop: 32,
-      marginBottom: 6,
-      fontSize: 10,
-      color: "#C3C5CD",
-  },
-  recentItem: {
-      flexDirection: "row",
-      alignItems: "flex-start",
-      marginBottom: 16,
-  },
-  activityIndicator: {
-      backgroundColor: "#7a29ff",
-      padding: 4,
-      height: 12,
-      width: 12,
-      borderRadius: 6,
-      marginTop: 3,
-      marginRight: 20,
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#f0f4f7", // Light background color for a clean look
+    },
+    text: {
+        fontFamily: "sans-serif-medium",
+        color: "#52575D", // A neutral, dark color for text
+    },
+    titleBar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 24,
+        marginHorizontal: 16,
+    },
+    image: {
+        flex: 1,
+        height: undefined,
+        width: undefined,
+    },
+    profileImage: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        overflow: "hidden",
+        marginTop: 36,
+        alignSelf: "center",
+    },
+    dm: {
+        backgroundColor: "#7a29ff",
+        position: "absolute",
+        top: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    active: {
+        backgroundColor: "#34FFB9",
+        position: "absolute",
+        bottom: 28,
+        left: 10,
+        padding: 4,
+        height: 20,
+        width: 20,
+        borderRadius: 10,
+    },
+    add: {
+        backgroundColor: "#7a29ff",
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    infoContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 16,
+    },
+    statsContainer: {
+        flexDirection: "row",
+        alignSelf: "center",
+        marginTop: 32,
+        backgroundColor: "#FFF", // White background for stats
+        borderRadius: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 6,
+        shadowOpacity: 0.1,
+        elevation: 3,
+    },
+    statsBox: {
+        alignItems: "center",
+        flex: 1,
+        padding: 12,
+    },
+    subText: {
+        fontSize: 12,
+        color: "#7a29ff",
+        textTransform: "uppercase",
+        fontWeight: "500",
+    },
+    recent: {
+        marginLeft: 78,
+        marginTop: 32,
+        marginBottom: 6,
+        fontSize: 10,
+        color: "#C3C5CD",
+    },
+    recentItem: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        marginBottom: 16,
+    },
+    activityIndicator: {
+        backgroundColor: "#7a29ff",
+        padding: 4,
+        height: 12,
+        width: 12,
+        borderRadius: 6,
+        marginTop: 3,
+        marginRight: 20,
+    },
 });
 
 

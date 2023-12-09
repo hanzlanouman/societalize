@@ -5,7 +5,7 @@ import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 const AppBar = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>facebook</Text>
+            <Text style={styles.text}>Societalize</Text>
             <View style={styles.row}>
                 <TouchableOpacity style={styles.button}>
                     <Feather name='search' size={29} color='black' />
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     text: {
-        color: '#3a86e9',
+        color: '#7a29ff',
         fontSize: 25,
         fontWeight: 'bold',
         letterSpacing: -0.3,
