@@ -4,9 +4,9 @@ import useAuth from '../hooks/useAuth';
 import { useEffect } from 'react';
 
 const RootNavigation = () => {
-  const { user } = useAuth();
+  const { currentUser } = useAuth();
 
-  return user ? <UserNav /> : <AuthNav />;
+  return currentUser ? <UserNav /> : <AuthNav />;
 };
 
 export default RootNavigation;
