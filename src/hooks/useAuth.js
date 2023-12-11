@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { auth } from '../config/firebase.config';
 import useFirestore from './useFirestore';
 import {
@@ -7,43 +7,53 @@ import {
   onAuthStateChanged,
   signOut,
 } from 'firebase/auth';
+import { AuthContext } from '../contexts/AuthContext';
+import { Alert } from 'react-native';
 
 const useAuth = () => {
   const [user, setUser] = useState(null);
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
+  const { setUserProfile, getUserProfile } = useFirestore();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser); 
-
-        setLoading(false);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userProfile = await getUserProfile(user.uid);
+        setCurrentUser({ ...user, ...userProfile }); // Use setCurrentUser
       } else {
-        setUser(undefined);
-
-        setLoading(false);
+        setCurrentUser(null); // Use setCurrentUser
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
-    
-
   const signIn = async (email, password) => {
-    await signInWithEmailAndPassword(auth, email, password);
-    const { getUserProfile } = useFirestore();
-    const user = await getUserProfile({email, password});
-
-
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      const userProfile = await getUserProfile(auth.currentUser.uid);
+      setCurrentUser({ ...auth.currentUser, ...userProfile });
+    } catch (error) {
+      console.log('uh oh');
+      console.log(error.message);
+      Alert.alert('Sign In Error', error.message);
+    }
   };
 
-  const signUp = async (email, password) => {
-    console.log(email, password);
-    await createUserWithEmailAndPassword(auth, email, password);
-    const { setUserProfile } = useFirestore();
-    await setUserProfile({email, password});
-};
-
+  const signUp = async (email, password, data) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await setUserProfile(userCredential.user.uid, data);
+      setCurrentUser({ ...userCredential.user, ...data }); // Update currentUser
+    } catch (error) {
+      Alert.alert('Sign Up Error', error.message);
+    }
+  };
 
   const signOutUser = async () => {
     try {
@@ -54,7 +64,7 @@ const useAuth = () => {
       // Handle error (e.g., show an error message to the user)
     }
   };
-  return { user, loading, signIn, signUp, signOutUser };
+  return { user, loading, signIn, signUp, signOutUser, currentUser };
 };
 
 export default useAuth;

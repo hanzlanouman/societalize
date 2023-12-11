@@ -12,7 +12,7 @@ import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 
 const Signup = () => {
-  const navigation =useNavigation();
+  const navigation = useNavigation();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -43,11 +43,8 @@ const Signup = () => {
   const handleSignup = async () => {
     if (validateForm()) {
       console.log('Form Data:', formData);
-      await signUp(formData.email, formData.password);
-      if(!result.success){
-        setErrors({email: result.message})
+      await signUp(formData.email, formData.password, formData);
 
-      }
       // proceed with signup
     }
   };
@@ -101,12 +98,11 @@ const Signup = () => {
           </View>
 
           <TouchableOpacity
-  style={styles.signupButton}
-  onPress={() => handleSignup()}
->
-  <Text style={styles.signupButtonText}>Sign Up</Text>
-</TouchableOpacity>
-
+            style={styles.signupButton}
+            onPress={() => handleSignup()}
+          >
+            <Text style={styles.signupButtonText}>Sign Up</Text>
+          </TouchableOpacity>
 
           <Text style={styles.orText}>OR</Text>
           <TouchableOpacity style={styles.googleSignInButton}>
