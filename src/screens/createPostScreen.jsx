@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5, // Spacing between buttons
   },
   discardButton: {
-    backgroundColor: '#CCCCCC', // A neutral color for the discard button
+    backgroundColor: '#7a29ff', // A neutral color for the discard button
   },
   postButton: {
     backgroundColor: '#7a29ff',
