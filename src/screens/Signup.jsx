@@ -46,6 +46,7 @@ const Signup = () => {
       await signUp(formData.email, formData.password, formData);
 
       // proceed with signup
+      
     }
   };
 

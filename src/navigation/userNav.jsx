@@ -17,6 +17,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import PostScreen from '../screens/PostScreen';
 import { AuthContext } from '../contexts/AuthContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CreateEventScreen from '../screens/CreateEventScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,9 +27,11 @@ const UserNav = () => {
       <Tab.Navigator initialRouteName='PostScreen'>
         <Tab.Screen name='PostScreen' component={PostScreen} />
         <Tab.Screen name='ProfileScreen' component={ProfileScreen} />
+        <Tab.Screen name='CreateEventScreen' component={CreateEventScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
+
 };
 
 const ProfileScreen = () => {
