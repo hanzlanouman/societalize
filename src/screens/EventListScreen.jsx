@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, } from 'react-native';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc} from 'firebase/firestore';
 import { firestore } from '../config/firebase.config';
+import { useNavigation } from '@react-navigation/native';
 const EventListScreen = () => {
   // Example events data - this should come from your state or props
+  const navigation = useNavigation();
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -22,18 +24,22 @@ const EventListScreen = () => {
     fetchEvents();
   }, []);
 
-  const handleDelete = (eventId) => {
+  const handleDelete = async (eventId) => {
     // Logic to handle event deletion
-    
-
-    
-    console.log('Delete event with id:', eventId);
+    try{
+      await deleteDoc(doc(firestore, "events", eventId));
+      console.log("Document successfully deleted!");
+      setEvents(events.filter(event => event.id !== eventId));
+    }
+    catch(error){
+      console.error("Error removing document: ", error);
+    }
   };
 
-  const handleEdit = (eventId) => {
-    // Logic to handle event editing
-    console.log('Edit event with id:', eventId);
+  const handleEdit = (event) => {
+    navigation.navigate('EditEvent', { event: event });
   };
+  
 
   return (
     <ScrollView style={styles.scrollView}>
