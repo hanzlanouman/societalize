@@ -18,7 +18,7 @@ import PostScreen from '../screens/PostScreen';
 import { AuthContext } from '../contexts/AuthContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreateEventScreen from '../screens/CreateEventScreen';
-import CreatePostScreen from '../screens/CreatePostScreen';
+import CreatePostScreen from '../screens/createPostScreen';
 import EventListScreen from '../screens/EventListScreen';
 
 const Stack = createStackNavigator();
@@ -35,7 +35,6 @@ const UserNav = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-
 };
 
 const ProfileScreen = () => {

@@ -10,6 +10,7 @@ import { TextInput } from 'react-native-paper';
 import { KeyboardAvoidingView } from 'react-native';
 import useAuth from '../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
+import useFirestore from '../hooks/useFirestore';
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -21,6 +22,7 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const { signUp } = useAuth();
+  const { emailExists, userExsists } = useFirestore();
 
   const validateForm = () => {
     let newErrors = {};
@@ -40,13 +42,25 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignup = async () => {
+  // const handleSignup = async () => {
+  //   if (validateForm()) {
+  //     console.log('Form Data:', formData);
+  //     await signUp(formData.email, formData.password, formData);
+
+  //     // proceed with signup
+
+  //   }
+  // };
+
+  const handleNext = async () => {
     if (validateForm()) {
       console.log('Form Data:', formData);
-      await signUp(formData.email, formData.password, formData);
-
-      // proceed with signup
-      
+      if (
+        !(await userExsists(formData.username)) &&
+        !(await emailExists(formData.email))
+      ) {
+        navigation.navigate('RegCreds', { formData });
+      }
     }
   };
 
@@ -97,10 +111,9 @@ const Signup = () => {
               value={formData.password}
             />
           </View>
-
           <TouchableOpacity
             style={styles.signupButton}
-            onPress={() => handleSignup()}
+            onPress={() => handleNext()}
           >
             <Text style={styles.signupButtonText}>Sign Up</Text>
           </TouchableOpacity>

@@ -8,36 +8,60 @@ import {
   KeyboardAvoidingView,
   Platform,
   Image,
+  Modal,
 } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import { Picker } from '@react-native-picker/picker';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { TextInput, RadioButton } from 'react-native-paper';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
-const RegistrationScreen = ({ navigation }) => {
+const RegistrationScreen = ({ navigation, route }) => {
+  const { formData } = route.params;
   const [department, setDepartment] = useState('');
   const [regNo, setRegNo] = useState('');
   const [image, setImage] = useState(null);
+  const [isModalVisible, setModalVisible] = useState(false);
 
-  const handlePictureUpload = () => {
-    const options = {
-      title: 'Select Avatar',
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
-    };
+  const handlePictureUpload = async () => {
+    // Ask for permission
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
 
-    launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        const source = { uri: response.uri };
-        setImage(source);
-      }
+    const pickerResult = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
     });
+
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    // Store the image temporarily
+    const newPath = FileSystem.documentDirectory + 'temp-image.jpg';
+    await FileSystem.copyAsync({
+      from: pickerResult.uri,
+      to: newPath,
+    });
+
+    setImage({ uri: newPath });
   };
+
+  const submitForm = () => {
+    const updatedFormData = {
+      ...formData,
+      department,
+      regNo,
+      imageUri: image?.uri,
+    };
+    console.log(updatedFormData);
+  };
+
+  const departments = ['BSE', 'BCE', 'BCS', 'EEE'];
 
   return (
     <KeyboardAvoidingView
@@ -50,22 +74,41 @@ const RegistrationScreen = ({ navigation }) => {
         <View style={styles.container}>
           <Text style={styles.headerText}>Registration</Text>
 
-          {/* Department Dropdown */}
-          <View style={styles.pickerContainer}>
-            <Picker
-              selectedValue={department}
-              onValueChange={(itemValue, itemIndex) => setDepartment(itemValue)}
-              style={styles.picker}
-            >
-              <Picker.Item label='Select Department' value='' />
-              <Picker.Item label='BSE' value='BSE' />
-              <Picker.Item label='BCE' value='BCE' />
-              <Picker.Item label='BCS' value='BCS' />
-              <Picker.Item label='EEE' value='EEE' />
-            </Picker>
-          </View>
-
-          {/* Registration Number Input */}
+          {/* Department Modal */}
+          <TouchableOpacity
+            style={styles.pickerButton}
+            onPress={() => setModalVisible(true)}
+          >
+            <Text style={styles.pickerButtonText}>
+              {department || 'Select Department'}
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            visible={isModalVisible}
+            onRequestClose={() => setModalVisible(false)}
+            transparent={true}
+            animationType='slide'
+          >
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>Choose Department</Text>
+              {departments.map((dept, index) => (
+                <View key={index} style={styles.radioContainer}>
+                  <RadioButton
+                    value={dept}
+                    status={department === dept ? 'checked' : 'unchecked'}
+                    onPress={() => setDepartment(dept)}
+                  />
+                  <Text style={styles.radioText}>{dept}</Text>
+                </View>
+              ))}
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.modalButtonText}>Done</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -73,6 +116,7 @@ const RegistrationScreen = ({ navigation }) => {
               label='Reg No'
               onChangeText={setRegNo}
               value={regNo}
+              placeholder='AB12-ABC-000'
             />
           </View>
 
@@ -91,6 +135,13 @@ const RegistrationScreen = ({ navigation }) => {
               style={{ width: 200, height: 200, marginTop: 10 }}
             />
           )}
+
+          {/* Submit Button */}
+          <TouchableOpacity style={styles.submitButton} onPress={submitForm}>
+            <Text style={styles.submitButtonText}>Submit</Text>
+          </TouchableOpacity>
+          {/* Remaining UI elements (TextInput, Image Upload, Submit Button) */}
+          {/* ... */}
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -98,6 +149,60 @@ const RegistrationScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  radioText: {
+    fontSize: 18,
+    marginLeft: 10,
+  },
+  modalButton: {
+    backgroundColor: '#7a29ff',
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 20,
+  },
+  modalButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  pickerButton: {
+    borderWidth: 1,
+    borderColor: '#7a29ff',
+    borderRadius: 8,
+    padding: 15,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  pickerButtonText: {
+    color: '#7a29ff',
+    fontSize: 18,
+  },
   scrollView: {
     flexGrow: 1,
   },
