@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet, } from 'react-native';
-
+import { collection, getDocs } from 'firebase/firestore';
+import { firestore } from '../config/firebase.config';
 const EventListScreen = () => {
   // Example events data - this should come from your state or props
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const eventsCollection = collection(firestore, 'events');
-      const eventsSnapshot = await getDocs(eventsCollection);
-      const eventsList = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setEvents(eventsList); // Update state with fetched events
+      try {
+        const eventsCollection = collection(firestore, 'events');
+        const eventsSnapshot = await getDocs(eventsCollection);
+        const eventsList = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setEvents(eventsList);
+        console.log(eventsList); // Debugging: Check the fetched data
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
     };
 
     fetchEvents();
@@ -18,6 +24,9 @@ const EventListScreen = () => {
 
   const handleDelete = (eventId) => {
     // Logic to handle event deletion
+    
+
+    
     console.log('Delete event with id:', eventId);
   };
 
@@ -30,28 +39,31 @@ const EventListScreen = () => {
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.headerText}>Event List</Text>
-        {events.map((event) => (
-          <View key={event.id} style={styles.eventBlock}>
-            <Text style={styles.title}>{event.eventName}</Text> {/* Updated field name */}
-            <Text style={styles.description}>{event.description}</Text>
-            {/* Assuming 'venue' is not a field in your Firestore, only 'date' and 'time' are displayed */}
-            <Text style={styles.info}>{event.date} at {event.time}</Text>
-            <View style={styles.buttonRow}>
-              <TouchableOpacity
-                style={[styles.button, styles.deleteButton]}
-                onPress={() => handleDelete(event.id)}
-              >
-                <Text style={styles.buttonText}>Delete</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.editButton]}
-                onPress={() => handleEdit(event.id)}
-              >
-                <Text style={styles.buttonText}>Edit</Text>
-              </TouchableOpacity>
+        {events.length > 0 ? (
+          events.map((event) => (
+            <View key={event.id} style={styles.eventBlock}>
+              <Text style={styles.title}>{event.eventName}</Text>
+              <Text style={styles.description}>{event.description}</Text>
+              <Text style={styles.info}>{event.date} at {event.time}</Text>
+              <View style={styles.buttonRow}>
+                <TouchableOpacity
+                  style={[styles.button, styles.deleteButton]}
+                  onPress={() => handleDelete(event.id)}
+                >
+                  <Text style={styles.buttonText}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.editButton]}
+                  onPress={() => handleEdit(event.id)}
+                >
+                  <Text style={styles.buttonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        ))}
+          ))
+        ) : (
+          <Text>No events found</Text>
+        )}
       </View>
     </ScrollView>
   );
