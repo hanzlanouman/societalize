@@ -1,13 +1,20 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, } from 'react-native';
 
 const EventListScreen = () => {
   // Example events data - this should come from your state or props
-  const events = [
-    { id: 1, title: 'Event 1', description: 'Description of Event 1', time: '12:00 PM', venue: 'Hall A' },
-    { id: 2, title: 'Event 2', description: 'Description of Event 2', time: '3:00 PM', venue: 'Hall B' },
-    // ... add more events
-  ];
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      const eventsCollection = collection(firestore, 'events');
+      const eventsSnapshot = await getDocs(eventsCollection);
+      const eventsList = eventsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setEvents(eventsList); // Update state with fetched events
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleDelete = (eventId) => {
     // Logic to handle event deletion
@@ -25,9 +32,10 @@ const EventListScreen = () => {
         <Text style={styles.headerText}>Event List</Text>
         {events.map((event) => (
           <View key={event.id} style={styles.eventBlock}>
-            <Text style={styles.title}>{event.title}</Text>
+            <Text style={styles.title}>{event.eventName}</Text> {/* Updated field name */}
             <Text style={styles.description}>{event.description}</Text>
-            <Text style={styles.info}>{event.time} - {event.venue}</Text>
+            {/* Assuming 'venue' is not a field in your Firestore, only 'date' and 'time' are displayed */}
+            <Text style={styles.info}>{event.date} at {event.time}</Text>
             <View style={styles.buttonRow}>
               <TouchableOpacity
                 style={[styles.button, styles.deleteButton]}
@@ -48,6 +56,7 @@ const EventListScreen = () => {
     </ScrollView>
   );
 };
+
 
 const styles = StyleSheet.create({
   scrollView: {

@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
+import { firestore } from '../config/firebase.config';
+import { collection, addDoc } from 'firebase/firestore';
 
 const CreateEventScreen = () => {
-  const [formData, setFormData] = useState({ eventName: '', description: '', date: '' , time: ''});
+  const [formData, setFormData] = useState({ eventName: '', description: '', date: '', time: '' });
   const [errors, setErrors] = useState({});
-  
+
   const handleEventCreation = () => {
-    // Logic to handle event creation
-    console.log('Form Data:', formData);
+    addDoc(collection(firestore, 'events'), {
+      eventName: formData.eventName,
+      description: formData.description,
+      date: formData.date,
+      time: formData.time,
+    })
+    .then(() => {
+      console.log('Event Created Successfully');
+      // Additional code
+    })
+    .catch(error => {
+      console.error("Error adding event: ", error);
+    });
   };
 
   return (
