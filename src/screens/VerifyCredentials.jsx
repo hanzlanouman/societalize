@@ -13,6 +13,7 @@ import {
 import { TextInput, RadioButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import useStorage from '../hooks/useStorage';
 
 const RegistrationScreen = ({ navigation, route }) => {
   const { formData } = route.params;
@@ -37,7 +38,7 @@ const RegistrationScreen = ({ navigation, route }) => {
       quality: 1,
     });
 
-    if (pickerResult.cancelled === true) {
+    if (pickerResult.canceled === true) {
       return;
     }
 
@@ -50,8 +51,9 @@ const RegistrationScreen = ({ navigation, route }) => {
 
     setImage({ uri: newPath });
   };
-
-  const submitForm = () => {
+  const { uploadFile } = useStorage();
+  const submitForm = async () => {
+    await uploadFile(image.uri);
     const updatedFormData = {
       ...formData,
       department,
