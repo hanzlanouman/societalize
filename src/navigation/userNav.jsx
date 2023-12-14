@@ -18,7 +18,7 @@ import PostScreen from '../screens/PostScreen';
 import { AuthContext } from '../contexts/AuthContext';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreateEventScreen from '../screens/CreateEventScreen';
-import CreatePostScreen from '../screens/CreatePostScreen';
+import CreatePostScreen from '../screens/createPostScreen';
 import EventListScreen from '../screens/EventListScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import EditEventScreen from '../screens/EditEventScreen';
@@ -44,6 +44,5 @@ const UserNav = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-
 };
 export default UserNav;
