@@ -203,6 +203,7 @@ const CreatePostScreen = () => {
 const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
+    backgroundColor: 'white',
   },
   image: {
     width: 300,
@@ -227,13 +228,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#7A29FF',
     backgroundColor: '#F8F2FF',
-    padding: 15,
+    // padding: 15,
     borderRadius: 10,
     fontSize: 16,
     marginBottom: 20,
   },
   descriptionInput: {
-    height: 100, // Adjusted for description input
+    height: 80, // Adjusted for description input
   },
   errorText: {
     color: 'red',
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5, // Spacing between buttons
   },
   discardButton: {
-    backgroundColor: '#7a29ff', // A neutral color for the discard button
+    backgroundColor: 'tomato', // A neutral color for the discard button
   },
   postButton: {
     backgroundColor: '#7a29ff',
