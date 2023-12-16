@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { auth, db, storage } from '../config/firebase.config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-
 const useStorage = () => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
-
   const uploadIdCardImage = async (fileUri) => {
     try {
       const response = await fetch(fileUri);

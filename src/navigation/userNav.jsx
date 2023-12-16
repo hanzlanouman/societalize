@@ -14,12 +14,7 @@ import EditEventScreen from '../screens/EditEventScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const MainStackScreen = () => (
-  <Stack.Navigator>
-    <Stack.Screen name='EventList' component={EventListScreen} />
-    <Stack.Screen name='EditEvent' component={EditEventScreen} />
-  </Stack.Navigator>
-);
+
 const UserNav = () => {
   return (
     <NavigationContainer>
@@ -30,9 +25,7 @@ const UserNav = () => {
             let iconName;
 
             if (route.name === 'PostScreen') {
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+              iconName = focused ? 'ios-home' : 'ios-home-outline';
             } else if (route.name === 'ProfileScreen') {
               iconName = focused ? 'ios-person' : 'ios-person-outline';
             } else if (route.name === 'CreateEventScreen') {
@@ -47,15 +40,12 @@ const UserNav = () => {
             return <Ionicons name={iconName} size={30} color={color} />;
           },
           tabBarActiveTintColor: '#7a29ff',
-          tabBarInactiveTintColor: 'gray',
+          tabBarInactiveTintColor: '#444',
           tabBarActiveBackgroundColor: '#e9e9e9',
+          tabBarShowLabel: false,
           // Dont show header
           headerShown: false,
-          tabBarLabelStyle: {
-            fontSize: 12,
-            marginHorizontal: 0,
-            textAlign: 'center',
-          },
+
           tabBarStyle: {
             height: 70,
           },
@@ -67,11 +57,7 @@ const UserNav = () => {
           // Set Text
           options={{ tabBarLabel: 'Feed' }}
         />
-        <Tab.Screen
-          name='ProfileScreen'
-          component={ProfileScreen}
-          options={{ tabBarLabel: 'Profile' }}
-        />
+
         <Tab.Screen
           name='CreateEventScreen'
           component={CreateEventScreen}
