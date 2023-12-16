@@ -9,6 +9,7 @@ import {
   Platform,
   Modal,
   Image,
+  Alert,
 } from 'react-native';
 import { TextInput, RadioButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
@@ -21,6 +22,7 @@ const RegistrationScreen = ({ navigation, route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [idCardImage, setIdCardImage] = useState(null);
   const departments = ['BSE', 'BCE', 'BCS', 'EEE'];
+  const [errors, setErrors] = useState(null);
 
   const navigateToAddProfilePicture = () => {
     const data = {
@@ -30,7 +32,11 @@ const RegistrationScreen = ({ navigation, route }) => {
       idCardImage,
     };
 
-    navigation.navigate('AddProfilePicture', { data });
+    if (!(idCardImage === null || department === '' || regNo === '')) {
+      navigation.navigate('AddProfilePicture', { data });
+    } else {
+      Alert.alert('Please Fill in all the fields');
+    }
   };
 
   const handlePictureUpload = async () => {
@@ -122,6 +128,17 @@ const RegistrationScreen = ({ navigation, route }) => {
             />
           </View>
 
+          <Text
+            style={{
+              fontSize: 18,
+
+              fontWeight: 'bold',
+              marginTop: 20,
+            }}
+          >
+            Please upload a scan of your university issued ID card
+          </Text>
+
           {/* Picture Upload */}
           <TouchableOpacity
             style={styles.uploadButton}
@@ -172,7 +189,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: 'bold',
   },
   radioContainer: {
@@ -181,19 +198,21 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   radioText: {
-    fontSize: 18,
+    fontSize: 23,
     marginLeft: 10,
   },
   modalButton: {
     backgroundColor: '#7a29ff',
     borderRadius: 20,
-    padding: 10,
+    paddingHorizontal: 25,
+    paddingVertical: 14,
     elevation: 2,
     marginTop: 20,
   },
   modalButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 20,
     textAlign: 'center',
   },
   pickerButton: {
@@ -215,6 +234,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 20,
   },
   container: {
     flex: 1,
@@ -253,6 +273,7 @@ const styles = StyleSheet.create({
   uploadButton: {
     backgroundColor: '#7a29ff',
     padding: 12,
+    marginTop: 30,
     borderRadius: 50,
     marginBottom: 10,
   },
@@ -266,6 +287,7 @@ const styles = StyleSheet.create({
   submitButton: {
     backgroundColor: '#7a29ff',
     padding: 12,
+    marginTop: 100,
     textAlign: 'center',
     color: 'white',
     borderRadius: 50,

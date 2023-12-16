@@ -9,7 +9,9 @@ import {
   doc,
   setDoc,
 } from 'firebase/firestore';
+import { useState } from 'react';
 const useFirestore = () => {
+  const [loading, setLoading] = useState(false);
   const setUserProfile = async (userId, profileData) => {
     const userProfileRef = doc(firestore, 'users', userId);
     await setDoc(userProfileRef, profileData);
@@ -36,22 +38,26 @@ const useFirestore = () => {
 
   const emailExists = async (email) => {
     console.log('API HIT');
+    setLoading(true);
     const q = query(
       collection(firestore, 'users'),
       where('email', '==', email)
     );
 
     const querySnapshot = await getDocs(q);
+    setLoading(false);
     return querySnapshot.docs.length > 0 ? true : false;
   };
 
   const userExsists = async (username) => {
+    setLoading(true);
     const q = query(
       collection(firestore, 'users'),
       where('username', '==', username)
     );
     const querySnapshot = await getDocs(q);
     console.log('API HIT');
+    setLoading(false);
     return querySnapshot.docs.length > 0 ? true : false;
   };
 
@@ -62,6 +68,7 @@ const useFirestore = () => {
     queryUserProfile,
     emailExists,
     userExsists,
+    loading,
   };
 };
 
