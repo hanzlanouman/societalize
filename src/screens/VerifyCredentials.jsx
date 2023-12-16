@@ -7,63 +7,63 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Image,
   Modal,
+  Image,
 } from 'react-native';
 import { TextInput, RadioButton } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
-import useStorage from '../hooks/useStorage';
 
 const RegistrationScreen = ({ navigation, route }) => {
   const { formData } = route.params;
   const [department, setDepartment] = useState('');
   const [regNo, setRegNo] = useState('');
-  const [image, setImage] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [idCardImage, setIdCardImage] = useState(null);
+  const departments = ['BSE', 'BCE', 'BCS', 'EEE'];
 
-  const handlePictureUpload = async () => {
-    // Ask for permission
-    const permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
-      return;
-    }
-
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (pickerResult.canceled === true) {
-      return;
-    }
-
-    // Store the image temporarily
-    const newPath = FileSystem.documentDirectory + 'temp-image.jpg';
-    await FileSystem.copyAsync({
-      from: pickerResult.uri,
-      to: newPath,
-    });
-
-    setImage({ uri: newPath });
-  };
-  const { uploadFile } = useStorage();
-  const submitForm = async () => {
-    await uploadFile(image.uri);
-    const updatedFormData = {
+  const navigateToAddProfilePicture = () => {
+    const data = {
       ...formData,
       department,
       regNo,
-      imageUri: image?.uri,
+      idCardImage,
     };
-    console.log(updatedFormData);
+
+    navigation.navigate('AddProfilePicture', { data });
   };
 
-  const departments = ['BSE', 'BCE', 'BCS', 'EEE'];
+  const handlePictureUpload = async () => {
+    try {
+      // Ask for permission
+      const permissionResult =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (!permissionResult.granted) {
+        alert('Permission to access camera roll is required!');
+        return;
+      }
+
+      const pickerResult = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+
+      if (!pickerResult.canceled) {
+        const newPath = FileSystem.documentDirectory + 'temp-image.jpg';
+        await FileSystem.copyAsync({
+          from: pickerResult.uri,
+          to: newPath,
+        });
+
+        setIdCardImage({ uri: newPath });
+      }
+    } catch (error) {
+      console.error('Error picking image:', error);
+      alert('Failed to pick image');
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -131,16 +131,19 @@ const RegistrationScreen = ({ navigation, route }) => {
           </TouchableOpacity>
 
           {/* Display the selected image */}
-          {image && (
+          {idCardImage && (
             <Image
-              source={image}
+              source={idCardImage}
               style={{ width: 200, height: 200, marginTop: 10 }}
             />
           )}
 
           {/* Submit Button */}
-          <TouchableOpacity style={styles.submitButton} onPress={submitForm}>
-            <Text style={styles.submitButtonText}>Submit</Text>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={navigateToAddProfilePicture}
+          >
+            <Text style={styles.submitButtonText}>Next</Text>
           </TouchableOpacity>
           {/* Remaining UI elements (TextInput, Image Upload, Submit Button) */}
           {/* ... */}
@@ -208,6 +211,11 @@ const styles = StyleSheet.create({
   scrollView: {
     flexGrow: 1,
   },
+  submitButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -253,6 +261,15 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: '700',
+  },
+
+  submitButton: {
+    backgroundColor: '#7a29ff',
+    padding: 12,
+    textAlign: 'center',
+    color: 'white',
+    borderRadius: 50,
+    marginBottom: 10,
   },
 });
 

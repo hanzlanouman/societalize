@@ -1,26 +1,25 @@
 import { useState, useEffect } from 'react';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../config/firebase.config';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const useStorage = () => {
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState(null);
   const [url, setUrl] = useState(null);
 
-  const uploadFile = async (file) => {
-    const storageRef = ref(storage, 'image1');
-    const collectionRef = collection(db, 'images');
-    console.log(file);
-    console.log('UPLOAD FILE');
+  const uploadFile = async (fileUri) => {
     try {
-      await uploadBytes(storageRef, file);
-      const url = await getDownloadURL(storageRef);
-      const createdAt = serverTimestamp();
-      await addDoc(collectionRef, { url, createdAt });
-      setUrl(url);
+      const response = await fetch(fileUri);
+      const blob = await response.blob();
+      const fileRef = ref(storage, `images/${new Date().getTime()}`); // Use a unique name for the file
+      await uploadBytes(fileRef, blob);
+      const downloadUrl = await getDownloadURL(fileRef);
+      // Save the URL to Firestore in a separate function if needed
+      return downloadUrl;
     } catch (err) {
+      console.error('Error uploading file: ', err);
       setError(err);
+      return null;
     }
   };
   return { progress, url, error, uploadFile };
