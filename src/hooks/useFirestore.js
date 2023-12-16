@@ -61,6 +61,10 @@ const useFirestore = () => {
     return querySnapshot.docs.length > 0 ? true : false;
   };
 
+  const createSocietyPost = async (userId, postData) => {
+    const postRef = doc(firestore, 'posts', userId);
+    await setDoc(postRef, postData);
+  };
   return {
     setUserProfile,
     getUserProfile,
@@ -68,6 +72,7 @@ const useFirestore = () => {
     queryUserProfile,
     emailExists,
     userExsists,
+    createSocietyPost,
     loading,
   };
 };
