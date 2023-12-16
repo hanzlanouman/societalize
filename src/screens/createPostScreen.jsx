@@ -24,6 +24,9 @@ const CreatePostScreen = () => {
     timings: '',
     announcement: false,
     postedBy: auth.currentUser.uid,
+    likes: 0,
+    comments: [],
+
     // postImage,
   });
   const [errors, setErrors] = useState({});

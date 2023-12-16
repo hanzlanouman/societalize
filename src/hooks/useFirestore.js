@@ -62,7 +62,11 @@ const useFirestore = () => {
   };
 
   const createSocietyPost = async (userId, postData) => {
-    const postRef = doc(firestore, 'posts', userId);
+    const postRef = doc(
+      firestore,
+      'posts',
+      `${userId}_${new Date().getTime()}`
+    );
     await setDoc(postRef, postData);
   };
   return {
