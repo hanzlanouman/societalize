@@ -16,6 +16,7 @@ import { AuthContext } from '../contexts/AuthContext';
 const ProfileScreen = () => {
   const { signOutUser } = useAuth();
   const { currentUser } = useContext(AuthContext);
+  console.log(currentUser.idCardImage);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -24,15 +25,13 @@ const ProfileScreen = () => {
         </View>
 
         <View style={{ alignSelf: 'center' }}>
-          <View style={styles.profileImage}>
-            <View style={styles.profileImage}></View>
-
-            <Image
-              source={require('../../assets/user3.jpg')}
-              style={styles.image}
-              resizeMode='center'
-            />
-          </View>
+          <Image
+            source={{
+              uri: currentUser.profileImageUrl,
+            }}
+            style={styles.profileImage}
+            resizeMode='center'
+          />
           <View style={styles.dm}>
             <MaterialIcons name='chat' size={18} color='purple'></MaterialIcons>
           </View>
