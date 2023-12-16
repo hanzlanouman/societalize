@@ -19,9 +19,11 @@ const AddProfilePicture = ({ navigation, route }) => {
   const [formData, setFormData] = useState(data);
   const [profileImage, setProfileImage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { uploadFile } = useStorage();
+  const { uploadIdCardImage, uploadProfilePicture } = useStorage();
   const { signUp } = useAuth();
   const { setUserProfile } = useFirestore();
+  console.log('DATA');
+  console.log(formData);
 
   const handleProfilePictureUpload = async () => {
     const permissionResult =
@@ -38,7 +40,7 @@ const AddProfilePicture = ({ navigation, route }) => {
       quality: 1,
     });
 
-    if (!pickerResult.cancelled && pickerResult.assets) {
+    if (!pickerResult.canceled && pickerResult.assets) {
       const newPath = FileSystem.documentDirectory + 'profile-image.jpg';
       await FileSystem.copyAsync({
         from: pickerResult.assets[0].uri, // Updated to use assets array
@@ -51,10 +53,12 @@ const AddProfilePicture = ({ navigation, route }) => {
   const completeRegistration = async () => {
     setIsLoading(true);
     try {
-      const profileImageUrl = await uploadFile(profileImage.uri);
+      const profileImageUrl = await uploadProfilePicture(profileImage.uri);
+      const idCardImageUrl = await uploadIdCardImage(formData.idCardImage.uri);
       const updatedFormData = {
         ...formData,
         profileImageUrl,
+        idCardImageUrl,
       };
       await signUp(
         updatedFormData.email,
@@ -79,7 +83,11 @@ const AddProfilePicture = ({ navigation, route }) => {
         style={styles.uploadButton}
         onPress={handleProfilePictureUpload}
       >
-        <Text style={styles.uploadButtonText}>Upload Profile Picture</Text>
+        {!profileImage ? (
+          <Text style={styles.uploadButtonText}>Upload Profile Picture</Text>
+        ) : (
+          <Text style={styles.uploadButtonText}>Change Profile Picture</Text>
+        )}
       </TouchableOpacity>
 
       {/* Complete Registration Button */}
@@ -106,15 +114,15 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    marginBottom: 20,
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    marginBottom: 40,
   },
 
   uploadButton: {
-    backgroundColor: 'purple',
-    padding: 10,
+    backgroundColor: '#7a29ff',
+    padding: 15,
     borderRadius: 5,
     marginBottom: 20,
   },
@@ -122,17 +130,19 @@ const styles = StyleSheet.create({
   uploadButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 18,
   },
 
   submitButton: {
-    backgroundColor: 'purple',
-    padding: 10,
+    backgroundColor: '#7a29ff',
+    padding: 15,
     borderRadius: 5,
   },
 
   submitButtonText: {
     color: 'white',
     fontWeight: 'bold',
+    fontSize: 18,
   },
 });
 

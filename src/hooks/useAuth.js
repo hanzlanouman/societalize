@@ -30,6 +30,7 @@ const useAuth = () => {
   }, []);
 
   const signIn = async (email, password) => {
+    setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       const userProfile = await getUserProfile(auth.currentUser.uid);
@@ -39,6 +40,7 @@ const useAuth = () => {
       console.log(error.message);
       Alert.alert('Sign In Error', error.message);
     }
+    setLoading(false);
   };
 
   const signUp = async (email, password, data) => {
@@ -48,6 +50,7 @@ const useAuth = () => {
         email,
         password
       );
+      delete data.password; // Don't store password in the user profile
       await setUserProfile(userCredential.user.uid, data);
       setCurrentUser({ ...userCredential.user, ...data }); // Update currentUser
     } catch (error) {
