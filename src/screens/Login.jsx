@@ -9,6 +9,7 @@ import {
 import { ActivityIndicator, TextInput } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import useAuth from '../hooks/useAuth';
+import GoogleLogin from './GoogleLogin';
 
 const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -82,10 +83,7 @@ const Login = () => {
             }
           </TouchableOpacity>
 
-          <Text style={styles.orText}>OR</Text>
-          <TouchableOpacity style={styles.googleSignInButton}>
-            <Text style={styles.googleSignInText}>Sign in with Google</Text>
-          </TouchableOpacity>
+              {/* <GoogleLogin/> */}
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Signup')}
