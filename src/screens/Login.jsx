@@ -83,7 +83,7 @@ const Login = () => {
             }
           </TouchableOpacity>
 
-              {/* <GoogleLogin/> */}
+              <GoogleLogin/>
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Signup')}
