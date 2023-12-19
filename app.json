@@ -24,7 +24,6 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-        
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.yourdomain.societalize"
@@ -34,7 +33,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "390c7b85-85ab-4130-b167-735c4ad270e9"
+        "projectId": "76e01ab7-c8f0-460d-bbcb-c403cbbb43e4"
       }
     }
   }

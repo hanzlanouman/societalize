@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1038362371548",
+    "project_id": "societalize-898d3",
+    "storage_bucket": "societalize-898d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038362371548:android:a7aee1ac1d6a0b52189b19",
+        "android_client_info": {
+          "package_name": "com.yourdomain.societalize"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038362371548-crcvajtvmoert3dbkujrgbc438th76lr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yourdomain.societalize",
+            "certificate_hash": "cfa57f0eeb4b3cfb2fa7e253676169cd538eab18"
+          }
+        },
+        {
+          "client_id": "1038362371548-p0re36v2v34o5rrh0458usrns7pj65hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARK0dAkpjT-_tVzZxPWIJa0ZMUV-WZjwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038362371548-p0re36v2v34o5rrh0458usrns7pj65hp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
