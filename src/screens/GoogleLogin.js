@@ -4,6 +4,7 @@ import { View, Text, Button, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useEffect, useState } from 'react';
 const GoogleLogin = ({ navigation }) => {
 
     GoogleSignin.configure({
@@ -18,9 +19,25 @@ const GoogleLogin = ({ navigation }) => {
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
         console.log(googleCredential);
         // Sign-in the user with the credential
-        return auth().signInWithCredential(googleCredential)
+        const user_sign_in = auth().signInWithCredential(googleCredential)
+            .then((user) => {
+                console.log(user);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
 
     }
+
+    // function onAuthStateChanged(user) {
+    //     setUser(user);
+    //     if (initializing) setInitializing(false);
+    //   }
+    
+    //   useEffect(() => {
+    //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    //     return subscriber; // unsubscribe on unmount
+    //   }, []);
 
     return (
         <View>
