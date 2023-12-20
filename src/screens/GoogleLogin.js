@@ -5,7 +5,10 @@ import { StyleSheet } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useEffect, useState } from 'react';
-const GoogleLogin = ({ navigation }) => {
+import { useNavigation } from '@react-navigation/native';
+const GoogleLogin = () => {
+
+    const navigation = useNavigation();
 
     GoogleSignin.configure({
         webClientId: '1038362371548-p0re36v2v34o5rrh0458usrns7pj65hp.apps.googleusercontent.com',
@@ -28,16 +31,32 @@ const GoogleLogin = ({ navigation }) => {
             });
 
     }
-
-    // function onAuthStateChanged(user) {
-    //     setUser(user);
-    //     if (initializing) setInitializing(false);
-    //   }
+// Set an initializing state whilst Firebase connects
+const [initializing, setInitializing] = React.useState(true);
+const [user, setUser] = React.useState();
+function onAuthStateChanged(user) {
+    setUser(user);
+ 
+//     auth()
+//   .signOut()
+//   .then(() => console.log('User signed out!'));
+        if (initializing) setInitializing(false);
+      }
     
-    //   useEffect(() => {
-    //     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    //     return subscriber; // unsubscribe on unmount
-    //   }, []);
+      React.useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount 
+      }, []);
+       
+      if(user)
+      {
+        console.log("user >>");
+        console.log(user);
+        console.log("user <<");
+        navigation.navigate("PostScreen")
+      }
+      else{console.log("No user!!"); }
+
 
     return (
         <View>

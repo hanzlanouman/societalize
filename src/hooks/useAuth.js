@@ -66,6 +66,9 @@ const useAuth = () => {
       console.error('Error signing out: ', error);
       // Handle error (e.g., show an error message to the user)
     }
+        auth()
+  .signOut()
+  .then(() => console.log('User signed out!'));
   };
   return { user, loading, signIn, signUp, signOutUser, currentUser };
 };
